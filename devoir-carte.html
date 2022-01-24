@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Photos et téléchargements</title>	
+	<link rel="stylesheet" type="text/css" href="devoir.css" />
+</head>
+
+<body>
+	<!--Espace réserver à l'entête -->
+<div class="banniere">
+    <img src="images/banniere.png" alt="banniere">
+</div>
+	<!-- Espace réserver au menu -->
+<div id="menu_top">
+  <ul>
+    <li><a href="devoir.html" title="Bienvenue" >Accueil</a></li>
+    <li><a href="devoir-photos.html" title="PHOTOS" >Photos</a></li>
+    <li><a href="devoir-télé.html" title="Telechargement" >Telechargements</a></li>
+    <li><a href="devoir-vidéos.html" title="Vidéos" >Vidéos</a></li>
+    <li><a href="devoir-Moncompte.html" title="Mon compte" >Mon compte</a></li>
+    <li id="actif"><a href="devoir-Carte.html" title="Carte du Ciel" >Carte du Ciel</a></li>
+    <li><a href="devoir-contact.html" title="Pour me joindre" >Contact</a></li>
+    <li><a href="plan.html" title="plan du site" >Plan du site</a></li>
+  </ul>
+</div>
+
+
+</body>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Authentification</title>	
+<script>
+function validate(){
+var login = document.forms["form"]["login"];
+var pwd = document.forms["form"]["pwd"];
+
+if(login.value =="")
+{
+alert ("Vous avez oublié de saisir le champ login!"); 
+login.focus();
+console.log("error login:"+ login.value);
+return false;
+}
+else if(pwd.value =="")
+{
+alert ("Vous avez oublié de saisir le champ password!"); 
+pwd.focus();
+console.log("error pwd:"+ pwd.value);
+return false;
+}
+else if(pwd.value.length<6)
+{
+alert ("Votre mot de passe doit être superieur à 6 caracteres!"); 
+pwd.focus();
+pwd.value="";
+console.log("length pwd:"+ pwd.value.length);
+return false;
+
+}
+else if(login.value.length<6)
+{
+alert ("Votre login doit  être superieur à 6 caracteres!"); 
+
+login.focus();
+login.value="";
+console.log("length pwd:"+ pwd.value.length);
+return false;
+
+}
+
+else 
+return true;
+
+}
+</script>
+</head>
+
+<body>
+
+
+	<br/>
+	<p class="texte-rouge">Veuillez saisir vote login et votre mot de passe:<p>
+	
+	<div class="global">
+	
+	<table>
+	<tr>
+	<td>
+		<form action="auth.php" name="form" method="GET" enctype="text/plain"onsubmit="return validate()">
+			<label for id="nom">login         :</label></td><td> <input type="text" name="login" />
+	</td>
+</tr><tr>	<td>
+			<label for id="pass">mot de passe : </label></td><td><input type="password" name="pwd"  />
+			</td>
+			</tr>
+			<tr><td class="sous-titre"></td><td></td></tr>
+			<tr>
+			
+			<td ></td><td>
+			<input type="reset" name="reset" value="Effacer" />
+			<input type="submit" name="submit" value="Valider" /></td>
+			</tr>
+		</form>
+		</table>
+
+	
+
+</body>
+
+<footer>
+ 
+    
+    <div class="colonne">
+      <img src="">
+      <p class="texte">Copyright Technologies WEB - 2019<br>Vannes 56000</p>
+  </div>
+
+</footer>
+</html>
