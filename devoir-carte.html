@@ -1,123 +1,96 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd%22%3E
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Photos et téléchargements</title>	
-	<link rel="stylesheet" type="text/css" href="devoir.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Contact</title>
+    <link rel="stylesheet" type="text/css" href="devoir.css" />
+
+    <script type="text/javascript" src="js/d3.min.js"></script>
+    <script type="text/javascript" src="js/d3.geo.projection.min.js"></script>
+    <script type="text/javascript" src="js/celestial.js"></script>
+    <link rel="stylesheet" href="style/celestial.css">
+    <style type="text/css">
+      .btnPlanet { display: inline-block; font: bold 14pt Consolas; margin: 0 6px; padding: 2px 6px; border: 2px solid #000; border-radius: 3px; background: rgba(204, 204, 255, 0.6) }
+    </style>
+    
 </head>
-
 <body>
-	<!--Espace réserver à l'entête -->
-<div class="banniere">
-    <img src="images/banniere.png" alt="banniere">
-</div>
-	<!-- Espace réserver au menu -->
-<div id="menu_top">
-  <ul>
-    <li><a href="devoir.html" title="Bienvenue" >Accueil</a></li>
-    <li><a href="devoir-photos.html" title="PHOTOS" >Photos</a></li>
-    <li><a href="devoir-télé.html" title="Telechargement" >Telechargements</a></li>
-    <li><a href="devoir-vidéos.html" title="Vidéos" >Vidéos</a></li>
-    <li><a href="devoir-Moncompte.html" title="Mon compte" >Mon compte</a></li>
-    <li id="actif"><a href="devoir-Carte.html" title="Carte du Ciel" >Carte du Ciel</a></li>
-    <li><a href="devoir-contact.html" title="Pour me joindre" >Contact</a></li>
-    <li><a href="plan.html" title="plan du site" >Plan du site</a></li>
-  </ul>
-</div>
+    <!--Espace réserver à l'entête -->
+    <div class="banniere">
+        <img src="images/banniere.png"  alt="banniere">
+    </div>
+        <!-- Espace réserver au menu -->
+    <div id="menu_top">
+ <ul>
+            <li><a href="devoir.html" title="Bienvenue" >Accueil</a></li>
+            <li><a href="devoir-photos.html" title="Photos" >Photos</a></li>
+            <li><a href="devoir-télé.html" title="Téléchargement" >Téléchargements</a></li>
+            <li><a href="devoir-vidéos.html" title="Vidéo">Vidéos</a></li>
+            <li><a href="devoir-Moncompte.html" title="Compte">Mon compte</a></li>
+            <li id="actif"><a href="devoir-carte.html" title="Carte">Carte du ciel</a></li>
+            <li><a href="devoir-contact.html" title="Pour me joindre" >Contact</a></li>
+            <li><a href="plan.html" title="plan du site" >Plan du site</a></li>
+        </ul>
+    </div>
+
+    <div class="main">
+    <div id="follow"></div>
+    <div style="overflow:hidden;"><div id="celestial-map"></div></div>
+    <div id="celestial-form"></div>
+    </div>
 
 
-</body>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Authentification</title>	
-<script>
-function validate(){
-var login = document.forms["form"]["login"];
-var pwd = document.forms["form"]["pwd"];
+ <script type="text/javascript">
 
-if(login.value =="")
-{
-alert ("Vous avez oublié de saisir le champ login!"); 
-login.focus();
-console.log("error login:"+ login.value);
-return false;
-}
-else if(pwd.value =="")
-{
-alert ("Vous avez oublié de saisir le champ password!"); 
-pwd.focus();
-console.log("error pwd:"+ pwd.value);
-return false;
-}
-else if(pwd.value.length<6)
-{
-alert ("Votre mot de passe doit être superieur à 6 caracteres!"); 
-pwd.focus();
-pwd.value="";
-console.log("length pwd:"+ pwd.value.length);
-return false;
+var cfg =Celestial.settings().set({
+      geopos: [47.666456976635594, -2.75978258607692],
+  location: true,
+   form: true,
+   formFields: {"location": true, "general": false, "stars": false, "dsos": false,"constellations": false, "lines": false, "other": false},
+   advanced: false,
+     follow: "center",
+      projection: "orthographic",
+       datapath: "https://ofrohn.github.io/data/",
+       planets: {show: true},
+       stars: {names: false, limit: 4.6},
+      dsos: {show: false},
+      constellations: {names: false}}),
+    reqID,
 
-}
-else if(login.value.length<6)
-{
-alert ("Votre login doit  être superieur à 6 caracteres!"); 
+ reqAnimFrame = window.requestAnimationFrame  ||window.mozRequestAnimationFrame||
+              window.webkitRequestAnimationFrame  ||window.msRequestAnimationFrame ||
+               window.oRequestAnimationFrame,
+ cncAnimFrame = window.cancelAnimationFrame  ||window.mozCancelAnimationFrame ||
+               window.webkitCancelAnimationFrame  ||window.msCancelAnimationFrame ||
+               window.oCancelAnimationFrame,
+    dt = new Date();
 
-login.focus();
-login.value="";
-console.log("length pwd:"+ pwd.value.length);
-return false;
-
+Celestial.display(cfg);
+function animate() {
+  dt.setDate(dt.getDate()+1);
+  Celestial.date(dt);
+  reqID = reqAnimFrame(animate);
+if (follow === "") return;
 }
 
-else 
-return true;
+d3.select('#celestial-map').on('mousedown', function() {cncAnimFrame(reqID)}) *
+d3.select('#celestial-map').on('mouseup', function() {reqAnimFrame(animate)})
 
-}
+reqID = reqAnimFrame(animate);
 </script>
-</head>
-
-<body>
-
-
-	<br/>
-	<p class="texte-rouge">Veuillez saisir vote login et votre mot de passe:<p>
-	
-	<div class="global">
-	
-	<table>
-	<tr>
-	<td>
-		<form action="auth.php" name="form" method="GET" enctype="text/plain"onsubmit="return validate()">
-			<label for id="nom">login         :</label></td><td> <input type="text" name="login" />
-	</td>
-</tr><tr>	<td>
-			<label for id="pass">mot de passe : </label></td><td><input type="password" name="pwd"  />
-			</td>
-			</tr>
-			<tr><td class="sous-titre"></td><td></td></tr>
-			<tr>
-			
-			<td ></td><td>
-			<input type="reset" name="reset" value="Effacer" />
-			<input type="submit" name="submit" value="Valider" /></td>
-			</tr>
-		</form>
-		</table>
-
-	
-
 </body>
 
 <footer>
  
     
-    <div class="colonne">
-      <img src="">
-      <p class="texte">Copyright Technologies WEB - 2019<br>Vannes 56000</p>
-  </div>
+  <div class="colonne">
+    <img src="">
+    <p class="texte">Copyright Technologies WEB - 2019<br>Vannes 56000</p>
+</div>
 
 </footer>
 </html>

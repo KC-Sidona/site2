@@ -34,7 +34,7 @@ html {
     
     #menu_top ul {
     list-style:none;
-    margin:0;
+    margin: 0;
     padding:10px 0px
     }
     
@@ -185,5 +185,12 @@ table{
 .stream{
     width: 398px;
     height: 260px;
-    border-radius: 0px;
+}
+.mp4{
+    width: 800px;
+    height: 200px;
+}
+.visite {
+    width: 800px;
+    height: 350px;
 }
